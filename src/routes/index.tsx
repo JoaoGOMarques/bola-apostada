@@ -24,28 +24,45 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const TIMES = [
-  "Atlético-MG",
-  "Bahia",
-  "Botafogo",
-  "Bragantino",
-  "Ceará",
-  "Corinthians",
-  "Cruzeiro",
-  "Flamengo",
-  "Fluminense",
-  "Fortaleza",
-  "Grêmio",
-  "Internacional",
-  "Juventude",
-  "Mirassol",
-  "Palmeiras",
-  "Santos",
-  "São Paulo",
-  "Sport",
-  "Vasco da Gama",
-  "Vitória",
+const logo = (id: number) => `https://a.espncdn.com/i/teamlogos/soccer/500/${id}.png`;
+
+const TIMES: { nome: string; escudo: string }[] = [
+  { nome: "Atlético-MG", escudo: logo(7632) },
+  { nome: "Bahia", escudo: logo(9967) },
+  { nome: "Botafogo", escudo: logo(6086) },
+  { nome: "Bragantino", escudo: logo(6079) },
+  { nome: "Ceará", escudo: logo(9969) },
+  { nome: "Corinthians", escudo: logo(874) },
+  { nome: "Cruzeiro", escudo: logo(2022) },
+  { nome: "Flamengo", escudo: logo(819) },
+  { nome: "Fluminense", escudo: logo(3445) },
+  { nome: "Fortaleza", escudo: logo(6272) },
+  { nome: "Grêmio", escudo: logo(6273) },
+  { nome: "Internacional", escudo: logo(1936) },
+  { nome: "Juventude", escudo: logo(6270) },
+  { nome: "Mirassol", escudo: logo(9169) },
+  { nome: "Palmeiras", escudo: logo(2029) },
+  { nome: "Santos", escudo: logo(2674) },
+  { nome: "São Paulo", escudo: logo(2026) },
+  { nome: "Sport", escudo: logo(7635) },
+  { nome: "Vasco da Gama", escudo: logo(3454) },
+  { nome: "Vitória", escudo: logo(3457) },
 ];
+
+const escudoDe = (nome: string) => TIMES.find((t) => t.nome === nome)?.escudo;
+
+function Escudo({ nome }: { nome: string }) {
+  const src = escudoDe(nome);
+  return (
+    <div className="flex size-11 shrink-0 items-center justify-center rounded-full border border-border bg-secondary">
+      {src ? (
+        <img src={src} alt={`Escudo do ${nome}`} loading="lazy" className="size-8 object-contain" />
+      ) : (
+        <span className="text-[10px] font-bold text-muted-foreground">?</span>
+      )}
+    </div>
+  );
+}
 
 type Palpite = "casa" | "empate" | "fora";
 type Jogo = { id: number; mandante: string; visitante: string; palpite: Palpite | null };
@@ -110,18 +127,21 @@ function Index() {
                 <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                   Mandante
                 </label>
-                <select
-                  value={jogo.mandante}
-                  onChange={(e) => atualizar(jogo.id, { mandante: e.target.value })}
-                  className={selectClass}
-                >
-                  <option value="">Selecione o time</option>
-                  {TIMES.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
+                <div className="flex items-center gap-2">
+                  <Escudo nome={jogo.mandante} />
+                  <select
+                    value={jogo.mandante}
+                    onChange={(e) => atualizar(jogo.id, { mandante: e.target.value })}
+                    className={selectClass}
+                  >
+                    <option value="">Selecione o time</option>
+                    {TIMES.map((t) => (
+                      <option key={t.nome} value={t.nome}>
+                        {t.nome}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               <span className="self-center pt-5 text-sm font-bold text-primary sm:pt-6">VS</span>
@@ -130,18 +150,21 @@ function Index() {
                 <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                   Visitante
                 </label>
-                <select
-                  value={jogo.visitante}
-                  onChange={(e) => atualizar(jogo.id, { visitante: e.target.value })}
-                  className={selectClass}
-                >
-                  <option value="">Selecione o time</option>
-                  {TIMES.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
+                <div className="flex items-center gap-2">
+                  <Escudo nome={jogo.visitante} />
+                  <select
+                    value={jogo.visitante}
+                    onChange={(e) => atualizar(jogo.id, { visitante: e.target.value })}
+                    className={selectClass}
+                  >
+                    <option value="">Selecione o time</option>
+                    {TIMES.map((t) => (
+                      <option key={t.nome} value={t.nome}>
+                        {t.nome}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
 
