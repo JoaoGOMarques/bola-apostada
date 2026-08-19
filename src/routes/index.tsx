@@ -127,18 +127,21 @@ function Index() {
                 <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                   Mandante
                 </label>
-                <select
-                  value={jogo.mandante}
-                  onChange={(e) => atualizar(jogo.id, { mandante: e.target.value })}
-                  className={selectClass}
-                >
-                  <option value="">Selecione o time</option>
-                  {TIMES.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
+                <div className="flex items-center gap-2">
+                  <Escudo nome={jogo.mandante} />
+                  <select
+                    value={jogo.mandante}
+                    onChange={(e) => atualizar(jogo.id, { mandante: e.target.value })}
+                    className={selectClass}
+                  >
+                    <option value="">Selecione o time</option>
+                    {TIMES.map((t) => (
+                      <option key={t.nome} value={t.nome}>
+                        {t.nome}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               <span className="self-center pt-5 text-sm font-bold text-primary sm:pt-6">VS</span>
@@ -147,18 +150,21 @@ function Index() {
                 <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                   Visitante
                 </label>
-                <select
-                  value={jogo.visitante}
-                  onChange={(e) => atualizar(jogo.id, { visitante: e.target.value })}
-                  className={selectClass}
-                >
-                  <option value="">Selecione o time</option>
-                  {TIMES.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
+                <div className="flex items-center gap-2">
+                  <Escudo nome={jogo.visitante} />
+                  <select
+                    value={jogo.visitante}
+                    onChange={(e) => atualizar(jogo.id, { visitante: e.target.value })}
+                    className={selectClass}
+                  >
+                    <option value="">Selecione o time</option>
+                    {TIMES.map((t) => (
+                      <option key={t.nome} value={t.nome}>
+                        {t.nome}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
 
